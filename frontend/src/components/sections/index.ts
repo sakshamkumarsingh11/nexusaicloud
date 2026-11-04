@@ -1,0 +1,7 @@
+export { default as HeroSection } from './HeroSection'
+export { default as WhatWeDoSection } from './WhatWeDoSection'
+export { default as TechStripSection } from './TechStripSection'
+export { default as ServicesSection } from './ServicesSection'
+export { default as IndustriesSection } from './IndustriesSection'
+export { default as CaseStudiesSection } from './CaseStudiesSection'
+export { default as WhyNexusSection } from './WhyNexusSection'
