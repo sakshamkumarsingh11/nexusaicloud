@@ -7,11 +7,14 @@ __pycache__/
 dist/
 build/
 *.egg-info/
+*.tsbuildinfo
 
 # Environment
 .env
-.env.local
-.env.production
+.env.*
+.env*.local
+!.env.example
+!.env.*.example
 
 # IDE
 .vscode/
@@ -25,10 +28,14 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Python
+# Python & Testing
 venv/
 .venv/
 .pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
 
 # Database
 *.db

@@ -155,3 +155,45 @@ def test_admin_flow_login_view_update(client, seeded_admin):
     logged_out_res = client.get("/api/v1/admin/me")
     assert logged_out_res.status_code == 401
 
+
+def test_production_secret_key_validation():
+    """Verify that settings reject insecure, missing or fallback secrets in production."""
+    import pytest
+    from pydantic import ValidationError
+    from app.config import Settings
+
+    # 1. Rejects development fallback key in production
+    with pytest.raises(ValidationError):
+        Settings(
+            environment="production",
+            secret_key="change-this-to-a-random-secret-key-at-least-32-chars",
+        )
+
+    # 2. Rejects weak/short secret (< 32 chars) in production
+    with pytest.raises(ValidationError):
+        Settings(
+            environment="production",
+            secret_key="short-secret-key",
+        )
+
+    # 3. Rejects empty secret in production
+    with pytest.raises(ValidationError):
+        Settings(
+            environment="production",
+            secret_key="",
+        )
+
+    # 4. Accepts cryptographically strong 64-character key in production
+    prod_settings = Settings(
+        environment="production",
+        secret_key="a" * 64,
+    )
+    assert prod_settings.secret_key == "a" * 64
+
+    # 5. Allows local development defaults when environment is development
+    dev_settings = Settings(
+        environment="development",
+        secret_key="change-this-to-a-random-secret-key-at-least-32-chars",
+    )
+    assert dev_settings.environment == "development"
+

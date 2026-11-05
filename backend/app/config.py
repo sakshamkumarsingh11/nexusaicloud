@@ -1,8 +1,21 @@
-from pydantic_settings import BaseSettings
+import os
 from functools import lru_cache
+from pydantic import model_validator
+from pydantic_settings import BaseSettings
+
+DEV_SECRET_FALLBACKS = {
+    "change-this-to-a-random-secret-key-at-least-32-chars",
+    "test-secret-key-for-unit-testing-32-chars-long",
+    "secret",
+    "password",
+    "changeme",
+}
 
 
 class Settings(BaseSettings):
+    # Environment
+    environment: str = "development"
+
     # Database
     database_url: str = "postgresql://user:password@localhost:5432/nexusaicloud"
 
@@ -27,6 +40,27 @@ class Settings(BaseSettings):
     rate_limit_per_minute: int = 10
 
     model_config = {"env_file": ".env", "extra": "ignore"}
+
+    @model_validator(mode="after")
+    def validate_production_security(self) -> "Settings":
+        env = self.environment.strip().lower()
+        is_production = env in ("production", "prod") or bool(os.getenv("RENDER"))
+        if is_production:
+            key = self.secret_key.strip() if self.secret_key else ""
+            if not key:
+                raise ValueError(
+                    "Production SECRET_KEY is missing. A cryptographically secure key must be provided."
+                )
+            if key in DEV_SECRET_FALLBACKS:
+                raise ValueError(
+                    "Production SECRET_KEY cannot use the development fallback value. "
+                    "Generate a cryptographically secure key with: python -c 'import secrets; print(secrets.token_urlsafe(64))'"
+                )
+            if len(key) < 32:
+                raise ValueError(
+                    f"Production SECRET_KEY is too weak ({len(key)} characters). It must be at least 32 characters long."
+                )
+        return self
 
 
 @lru_cache
