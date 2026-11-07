@@ -34,8 +34,8 @@ export default function Footer() {
             {/* Brand */}
             <div className="lg:col-span-4">
               <div className="mb-6">
-                <span className="text-xl font-bold tracking-tight">NEXUS</span>
-                <span className="block text-[10px] font-medium tracking-[0.12em] text-white/50 uppercase mt-0.5">
+                <span className="text-xl font-bold tracking-tight text-white">NEXUS</span>
+                <span className="block text-[10px] font-semibold tracking-[0.12em] text-white/80 uppercase mt-0.5">
                   AI & Cloud Solutions
                 </span>
               </div>
@@ -109,10 +109,10 @@ export default function Footer() {
               <div className="mt-8">
                 <p className="text-xs text-white/40 mb-1">Email</p>
                 <a
-                  href="mailto:hello@nexusaicloud.com"
+                  href="mailto:contact@nexusaicloud.com"
                   className="text-sm text-white/70 hover:text-white transition-colors"
                 >
-                  hello@nexusaicloud.com
+                  contact@nexusaicloud.com
                 </a>
               </div>
             </div>

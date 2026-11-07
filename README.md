@@ -149,7 +149,7 @@ SMTP_USER=
 SMTP_PASSWORD=
 SMTP_FROM_EMAIL=noreply@nexusaicloud.com
 SMTP_FROM_NAME=Nexus AI & Cloud Solutions
-NOTIFICATION_EMAIL=hello@nexusaicloud.com
+NOTIFICATION_EMAIL=contact@nexusaicloud.com
 
 # Rate Limiting
 RATE_LIMIT_PER_MINUTE=10

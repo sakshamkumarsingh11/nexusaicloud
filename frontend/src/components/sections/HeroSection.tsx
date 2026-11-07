@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Brain, Cloud, Database, Code } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import Container from '@/components/ui/Container'
@@ -10,93 +10,149 @@ import {
   scaleIn,
 } from '@/hooks/useScrollAnimation'
 
-function OrbitalSphere() {
+/* ── AI & Cloud Architecture Visualization ── */
+
+const nodes = [
+  { label: 'Artificial Intelligence', Icon: Brain, angle: -45 },
+  { label: 'Cloud Infrastructure', Icon: Cloud, angle: 45 },
+  { label: 'Data Engineering', Icon: Database, angle: 135 },
+  { label: 'Software Development', Icon: Code, angle: 225 },
+] as const
+
+function ArchitectureVisual() {
+  const cx = 240
+  const cy = 240
+  const orbitR = 155
+
   return (
     <motion.div
       variants={scaleIn}
       className="relative w-full aspect-square max-w-[480px] mx-auto"
     >
-      {/* Main sphere */}
-      <div className="absolute inset-[15%] rounded-full bg-gradient-to-br from-brand-lavender via-white to-brand-lavender-deep shadow-xl" />
-
-      {/* Dashed orbit 1 — horizontal ellipse */}
       <svg
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 480 480"
         fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <ellipse
-          cx="240"
-          cy="240"
-          rx="220"
-          ry="120"
-          stroke="currentColor"
-          className="text-brand-border"
-          strokeWidth="1"
-          strokeDasharray="8 6"
-          transform="rotate(-25 240 240)"
+        <defs>
+          {/* Glassmorphism filters */}
+          <filter id="glass-center" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+          </filter>
+          <filter id="glass-shadow" x="-30%" y="-20%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="2" stdDeviation="6" floodColor="#4F52C8" floodOpacity="0.10" />
+          </filter>
+
+          {/* Animated dash for connection lines */}
+          <style>{`
+            @keyframes dash-flow {
+              to { stroke-dashoffset: -24; }
+            }
+            .conn-line {
+              stroke-dasharray: 6 6;
+              animation: dash-flow 2s linear infinite;
+            }
+          `}</style>
+        </defs>
+
+        {/* Connection lines from center to each node */}
+        {nodes.map(({ label, angle }) => {
+          const rad = (angle * Math.PI) / 180
+          const nx = cx + orbitR * Math.cos(rad)
+          const ny = cy + orbitR * Math.sin(rad)
+          return (
+            <line
+              key={label}
+              x1={cx}
+              y1={cy}
+              x2={nx}
+              y2={ny}
+              stroke="#C7C8E2"
+              strokeWidth="1"
+              className="conn-line"
+            />
+          )
+        })}
+
+        {/* Subtle orbit ring */}
+        <circle
+          cx={cx}
+          cy={cy}
+          r={orbitR}
+          stroke="#DDDEED"
+          strokeWidth="0.75"
+          strokeDasharray="4 4"
+          fill="none"
         />
-        <ellipse
-          cx="240"
-          cy="240"
-          rx="200"
-          ry="100"
-          stroke="currentColor"
-          className="text-brand-border"
-          strokeWidth="1"
-          strokeDasharray="6 8"
-          transform="rotate(35 240 240)"
-        />
-        <ellipse
-          cx="240"
-          cy="240"
-          rx="180"
-          ry="80"
-          stroke="currentColor"
-          className="text-brand-border-light"
-          strokeWidth="1"
-          strokeDasharray="4 6"
-          transform="rotate(-60 240 240)"
-        />
+
+        {/* Center glass hub */}
+        <g filter="url(#glass-shadow)">
+          <rect
+            x={cx - 62}
+            y={cy - 40}
+            width="124"
+            height="80"
+            rx="16"
+            fill="white"
+            fillOpacity="0.85"
+            stroke="#DDDEED"
+            strokeWidth="1"
+          />
+          <text
+            x={cx}
+            y={cy - 8}
+            textAnchor="middle"
+            fontSize="16"
+            fontWeight="700"
+            fill="#111118"
+            fontFamily="'Inter', system-ui, sans-serif"
+          >
+            NEXUS
+          </text>
+          <text
+            x={cx}
+            y={cy + 12}
+            textAnchor="middle"
+            fontSize="7.5"
+            fontWeight="500"
+            fill="#6B7280"
+            letterSpacing="0.12em"
+            fontFamily="'Inter', system-ui, sans-serif"
+          >
+            AI &amp; CLOUD SOLUTIONS
+          </text>
+        </g>
       </svg>
 
-      {/* Floating dots */}
-      <motion.div
-        className="absolute w-4 h-4 rounded-full bg-brand-indigo shadow-lg"
-        style={{ top: '8%', left: '55%' }}
-        animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute w-3 h-3 rounded-full bg-brand-dark"
-        style={{ top: '30%', right: '5%' }}
-        animate={{ y: [0, 6, 0], x: [0, -3, 0] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-      />
-      <motion.div
-        className="absolute w-5 h-5 rounded-full bg-brand-lavender-deep border border-brand-border"
-        style={{ bottom: '18%', right: '10%' }}
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-      />
-      <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-brand-indigo/60"
-        style={{ bottom: '25%', left: '8%' }}
-        animate={{ y: [0, 8, 0], x: [0, 4, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-      />
-      <motion.div
-        className="absolute w-3.5 h-3.5 rounded-full bg-white border border-brand-border shadow-md"
-        style={{ top: '20%', left: '10%' }}
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-      />
-      <motion.div
-        className="absolute w-2 h-2 rounded-full bg-brand-dark/40"
-        style={{ top: '65%', left: '3%' }}
-        animate={{ y: [0, 5, 0], x: [0, -3, 0] }}
-        transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-      />
+      {/* Peripheral technology nodes */}
+      {nodes.map(({ label, Icon, angle }, i) => {
+        const rad = (angle * Math.PI) / 180
+        const pctX = ((cx + orbitR * Math.cos(rad)) / 480) * 100
+        const pctY = ((cy + orbitR * Math.sin(rad)) / 480) * 100
+
+        return (
+          <motion.div
+            key={label}
+            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 pointer-events-none"
+            style={{ left: `${pctX}%`, top: `${pctY}%` }}
+            animate={{ y: [0, i % 2 === 0 ? -5 : 5, 0] }}
+            transition={{
+              duration: 3.5 + i * 0.5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: i * 0.4,
+            }}
+          >
+            <div className="w-11 h-11 rounded-xl bg-white/90 backdrop-blur-sm border border-brand-border-light shadow-card flex items-center justify-center">
+              <Icon className="w-5 h-5 text-brand-indigo" strokeWidth={1.6} />
+            </div>
+            <span className="text-[9px] sm:text-[10px] font-medium text-brand-dark/70 whitespace-nowrap leading-none text-center max-w-[80px]">
+              {label}
+            </span>
+          </motion.div>
+        )
+      })}
     </motion.div>
   )
 }
@@ -158,7 +214,7 @@ export default function HeroSection() {
 
           {/* Visual column */}
           <div className="order-1 lg:order-2">
-            <OrbitalSphere />
+            <ArchitectureVisual />
           </div>
         </motion.div>
       </Container>

@@ -156,10 +156,10 @@ export default function Privacy() {
               If you have any questions about this privacy policy or wish to
               exercise your data rights, please contact us at{' '}
               <a
-                href="mailto:hello@nexusaicloud.com"
+                href="mailto:contact@nexusaicloud.com"
                 className="text-brand-indigo hover:underline"
               >
-                hello@nexusaicloud.com
+                contact@nexusaicloud.com
               </a>
               .
             </p>

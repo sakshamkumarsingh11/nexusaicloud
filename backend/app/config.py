@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     smtp_password: str = ""
     smtp_from_email: str = "noreply@nexusaicloud.com"
     smtp_from_name: str = "Nexus AI & Cloud Solutions"
-    notification_email: str = "hello@nexusaicloud.com"
+    notification_email: str = "contact@nexusaicloud.com"
 
     # Rate Limiting
     rate_limit_per_minute: int = 10

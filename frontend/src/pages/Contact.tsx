@@ -153,10 +153,10 @@ export default function Contact() {
                     <div>
                       <p className="text-xs text-brand-muted mb-1">Email</p>
                       <a
-                        href="mailto:hello@nexusaicloud.com"
+                        href="mailto:contact@nexusaicloud.com"
                         className="text-sm text-brand-dark hover:text-brand-indigo transition-colors"
                       >
-                        hello@nexusaicloud.com
+                        contact@nexusaicloud.com
                       </a>
                     </div>
                   </div>

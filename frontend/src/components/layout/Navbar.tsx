@@ -68,7 +68,7 @@ export default function Navbar() {
               <span className="text-lg font-bold tracking-tight text-brand-dark leading-none">
                 NEXUS
               </span>
-              <span className="text-[9px] font-medium tracking-[0.12em] text-brand-muted uppercase leading-none mt-0.5">
+              <span className="text-[9px] font-semibold tracking-[0.12em] text-brand-dark uppercase leading-none mt-0.5">
                 AI & Cloud Solutions
               </span>
             </div>
